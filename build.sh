@@ -15,7 +15,7 @@ js () {
     input_file="client/sidebar.js"
     output_file="${dist_dir}/bundle.min.js.html"
     echo "<script>" > ${output_file}
-    browserify -t 'uglifyify' ${input_file} | uglifyjs >> ${output_file}
+    node_modules/.bin/browserify -t 'uglifyify' ${input_file} | node_modules/.bin/uglifyjs >> ${output_file}
     echo "</script>" >> ${output_file}
 }
 
@@ -37,7 +37,7 @@ css () {
         theme_name=$(basename ${filename} .css)
         if [[ ${theme_name} != 'darkula' ]]; then
             theme="<style id=\"${theme_name}\">"
-            theme+=$(cleancss --debug -O1 ${optimizations} ${filename})
+            theme+=$(node_modules/.bin/cleancss --debug -O1 ${optimizations} ${filename})
             theme+="</style>"
             echo ${theme} >> ${output_file}
         fi
